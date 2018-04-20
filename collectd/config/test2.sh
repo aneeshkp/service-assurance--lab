@@ -1,0 +1,1 @@
+  echo "PUTVAL \"[{ \"values\": 1,\"dstypes\": [\"guage\"],\"dsnames\": [\"value\"],\"time\": 1280959128,\"interval\": 10,\"host\": \"localhost\",\"plugin\": \"openstack\" ,\"plugin_instance\": \"0\", \"type\": \"openstack\",\"type_instance\": \"availbility\"}]"
