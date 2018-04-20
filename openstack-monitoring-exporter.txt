@@ -1,0 +1,16 @@
+docker run -d -p 19103:19103 --env-file env_file  -it monitor/osp3:latest
+https://github.com/att-comdev/prometheus-openstack-exporter 
+
+env_file
+OS_AUTH_URL=http://10.19.111.26:5000/v3
+OS_PASSWORD=
+OS_PROJECT_NAME=admin
+OS_USERNAME=admin
+OS_USER_DOMAIN_NAME=default
+OS_REGION_NAME=regionOne
+TIMEOUT_SECONDS=20
+OS_POLLING_INTERVAL=60
+OS_RETRIES=1
+LISTEN_PORT=19103
+OS_CPU_OC_RATIO=1.5
+OS_RAM_OC_RATIO=1
