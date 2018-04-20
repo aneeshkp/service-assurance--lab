@@ -1,0 +1,71 @@
+ groups:
+ - name: test-node
+   interval: 30s
+   rules:
+   - record: job:svc_1_documents_loaded_count:avg_rate1s
+     expr: avg(rate(svc_1_documents_loaded_count[1s])) by (job)
+   - record: job:svc_2_documents_loaded_count:avg_rate1s
+     expr: avg(rate(svc_2_documents_loaded_count[1s])) by (job)
+   - record: job:svc_3_documents_loaded_count:avg_rate1s
+     expr: avg(rate(svc_3_documents_loaded_count[1s])) by (job)
+   - record: job:svc_4_documents_loaded_count:avg_rate1s
+     expr: avg(rate(svc_4_documents_loaded_count[1s])) by (job)
+   - record: job:svc_5_documents_loaded_count:avg_rate1s
+     expr: avg(rate(svc_5_documents_loaded_count[1s])) by (job)
+   - record: job:svc_6_documents_loaded_count:avg_rate1s
+     expr: avg(rate(svc_6_documents_loaded_count[1s])) by (job)
+   - record: job:svc_7_documents_loaded_count:avg_rate1s
+     expr: avg(rate(svc_7_documents_loaded_count[1s])) by (job)
+   - record: job:svc_8_documents_loaded_count:avg_rate1s
+     expr: avg(rate(svc_8_documents_loaded_count[1s])) by (job)
+   - record: job:svc_9_documents_loaded_count:avg_rate1s
+     expr: avg(rate(svc_9_documents_loaded_count[1s])) by (job)
+   - record: job:svc_10_documents_loaded_count:avg_rate1s
+     expr: avg(rate(svc_10_documents_loaded_count[1s])) by (job)
+ 
+ - name: openstack_exporter_status
+   interval: 5s
+   rules:
+   - alert: openstack exporter down
+     expr: absent(up{job="openstack"}) or sum(up{job="openstack"}) < 1
+     for: 10s
+     labels:
+       severity: critical
+     annotations:
+       summary: Openstack monitoring service is down for 10s
+       description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 10 secs."
+       
+ - name: Instance Down
+   interval: 5s
+   rules:
+   # Alert for any instance that is unreachable for >5 minutes.
+   - alert: InstanceDown
+     expr: up == 0
+     for: 5m
+     labels:
+       severity: page
+     annotations:
+       summary: "Instance {{ $labels.instance }} down"
+       description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes."
+
+ - name: API_status
+   interval: 5s 
+   rules:
+   - alert: Openstack Service is down
+     expr: avg_over_time({__name__=~".*api" ,job="openstack"}[5s])==0 
+     for: 10s
+     labels:
+       severity: critical
+     annotations:
+       summary: openstack service {{$labels.service}} is down
+       description: "openstack  {{$labels.service}} api service (host :{{ $labels.instance }} of job {{ $labels.job }}) has been DOWN for more than 10 secs."
+
+   #- alert: Openstack Service is up
+   #  expr: avg_over_time({__name__=~".*api" ,job="openstack"}[5s])==1 
+   #  for: 10s
+   #  labels:
+   #    severity: info
+   #  annotations:
+   #    summary: openstack service {{$labels.service}} is up
+   #    description: "openstack  {{$labels.service}} api service (host :{{ $labels.instance }} of job {{ $labels.job }}) is UP."
+ 

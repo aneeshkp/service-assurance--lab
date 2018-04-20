@@ -1,0 +1,79 @@
+global:
+  smtp_smarthost: 'localhost:25'
+  smtp_from: 'alertmanager@example.org'
+
+#templates: 
+#- '/etc/alertmanager/template/*.tmpl'
+
+route:
+  # The root route must not have any matchers as it is the entry point for
+  # all alerts. It needs to have a receiver configured so alerts that do not
+  # match any of the sub-routes are sent to someone.
+  receiver: 'SNMP_WH'
+  group_by: ['alertname', 'cluster', 'service']
+
+  # When a new group of alerts is created by an incoming alert, wait at
+  # least 'group_wait' to send the initial notification.
+  # This way ensures that you get multiple alerts for the same group that start
+  # firing shortly after another are batched together on the first
+  # notification. 
+  group_wait: 1s
+
+  # When the first notification was sent, wait 'group_interval' to send a batch
+  # of new alerts that started firing for that group.
+  group_interval: 1s
+
+  # If an alert has successfully been sent, wait 'repeat_interval' to
+  # resend them. 
+  repeat_interval: 10000000m 
+
+  # A default receiver
+  #receiver: REFLECT
+
+  # All the above attributes are inherited by all child routes and can
+  # overwritten on each.
+
+  # The child route trees. 
+  routes:
+  # All alerts with label alertsource=SMARTAGENT 
+  # are dispatched to the webhook in smarkagent.
+  - match_re:
+      alertsource: SMARTAGENT
+    receiver: SNMP_WH
+  - match_re:
+      service: ^(prm|prometheus|p)$
+    receiver: SNMP_WH
+    # The service has a sub-route for critical alerts, any alerts
+    # that do not match, i.e. severity != critical, fall-back to the
+    # parent node and are sent to 'REFLECT_WH'
+    routes:
+    - match:
+        severity: critical
+      receiver: SNMP_WH
+  
+
+# Inhibition rules allow to mute a set of alerts given that another alert is
+# firing.
+# We use this to mute any warning-level notifications if the same alert is
+# already critical.
+inhibit_rules:
+- source_match:
+    severity: 'critical'
+  target_match:
+    severity: 'warning'
+  # Apply inhibition if the alert name is the same.
+  equal: ['alertname', 'cluster', 'service']
+
+
+receivers:
+- name: 'SMARTAGENT_WH'
+  webhook_configs:
+    - url: 'http://10.18.81.40:9999/alert' 
+
+- name: 'REFLECT_WH'
+  webhook_configs:
+    - url: 'http://10.19.110.5:8090' 
+
+- name: 'SNMP_WH'
+  webhook_configs:
+    - url: 'http://10.19.110.5:9099'
