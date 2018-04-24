@@ -1,2 +1,10 @@
 docker pull nfvpe/metrics_consumer
 docker pull nfvpe/events_consumer
+
+
+docker run -d -v $HOME/gateway_config/:/etc/smartgateway/ -P --net=host  nfvpe/events_consumer:latest --config=/etc/smartgateway/sa.events.config.conf 
+
+
+
+docker run -d -v $HOME/gateway_config/:/etc/smartgateway/ -P --net=host  nfvpe/metrics_consumer:latest --config=/etc/smartgateway/sa.metrics.config.conf
+
