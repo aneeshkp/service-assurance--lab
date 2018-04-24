@@ -9,3 +9,17 @@ prometheus_webhook_snmptrapper -webhookaddress 10.19.110.5:9099
 cp PROMETHEUS-TRAPPER-MIB.txt /usr/share/snmp/mibs/
 
 snmpwalk  -v 2c -c public 127.0.0.1 PROMETHEUS-TRAPPER-MIB::prometheusTrapperFiringNotification
+
+
+
+
+------------------------------------------------------------------------------
+[Unit]
+Description=prometheus.snmptrapper.service
+[Service]
+Type=simple
+User=root
+ExecStart= /usr/local/bin/prometheus_webhook_snmptrapper -webhookaddress 10.19.110.5:9099
+
+[Install]
+WantedBy=multi-user.target
