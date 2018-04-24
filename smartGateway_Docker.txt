@@ -1,0 +1,2 @@
+docker pull nfvpe/metrics_consumer
+docker pull nfvpe/events_consumer
