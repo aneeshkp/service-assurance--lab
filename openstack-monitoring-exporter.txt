@@ -14,3 +14,27 @@ OS_RETRIES=1
 LISTEN_PORT=19103
 OS_CPU_OC_RATIO=1.5
 OS_RAM_OC_RATIO=1
+
+
+
+----------------------
+{
+  "auth":{
+  "identity": {
+                    "methods": ["password"],
+                    "password": {
+                        "user": {
+                            "name": "admin",
+                            "domain": { "id": "default" },
+                            "password": "redhat"
+                        }
+                    }
+                },
+                "scope": {
+                    "project": {
+                        "name": "admin",
+                        "domain": { "id": "default" }
+                    }
+                }
+            }
+}
