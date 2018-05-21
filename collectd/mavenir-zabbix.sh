@@ -6,7 +6,6 @@ INTERVAL="${COLLECTD_INTERVAL:-10}"
 # Flexible parameter to grab global variables. On the frontend side, use keys like mysql.status[Com_insert].
 # Key syntax is mysql.status[variable].
 while sleep "$INTERVAL" ; do
-  echo "start"
   #Read more https://linux.die.net/man/5/collectd-exec
   #An Identifier is of the form " host / plugin - instance / type - instance "
   #Refer for all typesdb to use like links-cinder  https://github.com/collectd/collectd/blob/master/src/types.db
