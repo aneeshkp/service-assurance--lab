@@ -1,0 +1,45 @@
+groups:
+ - name: InstanceDown
+   interval: 5s
+   rules:
+   # Alert for any instance that is unreachable for >5 minutes.
+   - alert: InstanceDown
+     expr: up == 0
+     for: 5m
+     labels:
+       severity: page
+     annotations:
+       summary: "Instance {{ $labels.instance }} down"
+       description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes."
+
+ - name: API_status
+   interval: 30s
+   rules:
+   - alert: Openstack Service is down
+     expr: avg_over_time({__name__=~".*api" ,job="openstack"}[30s])==0
+     for: 30s
+     labels:
+       severity: critical
+     annotations:
+       summary: openstack service {{$labels.service}} is down
+       description: "openstack  {{$labels.service}} api service {{ $labels.url }} of job {{ $labels.job }} has been DOWN for more than 30 secs."
+
+ - name: NFVi_services_status
+   interval: 30s
+   rules:
+   - alert: NFVi service is down
+     expr: avg_over_time(collectd_nfvi_service{job="collectd",service!~"zombieprocess-process"}[30s])==0
+     for: 30s
+     labels:
+       severity: critical
+     annotations:
+       summary: NFVi service is down
+       description: "NFVi service has been DOWN for more than 30 secs."
+   - alert: Zombie process(es)
+     expr: avg_over_time(collectd_nfvi_service{job="collectd",service="zombieprocess-process"}[30s])>0
+     for: 30s
+     labels:
+       severity: critical
+     annotations:
+       summary: "{{ $value }} zombie process(es) found"
+       description: "{{ $value }} zombie process(es) for more than 30 secs."
