@@ -1,0 +1,67 @@
+# my global config
+global:
+  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+  external_labels: 
+    exporter_node: prometheus-10.19.109.225
+
+# Alertmanager configuration
+alerting:
+  
+  alert_relabel_configs:
+  - source_labels: [exporter_node]
+    regex: (prometheus).+
+    target_label: exporter_node
+
+  alertmanagers:
+  - static_configs:
+    - targets:
+           - 10.19.109.225:9093
+           - 10.19.109.229:9093
+    
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+   - "prometheus_rules.yml"
+  # - "second_rules.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: 'collectd'
+    honor_labels: true
+#    relabel_configs:
+#      - source_labels: [exported_instance]
+#        target_label: instance
+#
+#      - source_labels: [__address__]
+#        target_label: exported_instance
+
+    metric_relabel_configs:
+      - source_labels: [type]
+        target_label: service
+
+      - regex: 'type'
+        action: labeldrop
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    static_configs:
+      - targets: ['10.19.109.225:9103']
+      - targets: ['10.19.109.229:9103']
+  - job_name: 'openstack'
+    honor_labels: true
+    metric_relabel_configs:
+    - source_labels: [url]
+      target_label: instance
+      regex: https?://(.+):.+
+      replacement: $1
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    static_configs:
+      - targets: ['10.19.109.225:19103']
