@@ -1,3 +1,9 @@
   
   docker pull nfvpe/qpid-dispatch-router:latest
   docker run -d -v $HOME/qdr.conf.d/:/etc/qdr.conf.d/ -P --net=host  nfvpe/qpid-dispatch-router:latest --config=/etc/qdr.conf.d/qdrouterd.conf
+
+
+
+#for tagged version
+docker pull nfvpe/qpid-dispatch-router:1.2.0-2
+ docker run -d -v /root/qdr.conf.d/:/etc/qdr.conf.d/ -P --net=host  'nfvpe/qpid-dispatch-router:1.2.0-2' /sbin/qdrouterd --config=/etc/qdr.conf.d/qdrouterd.conf
