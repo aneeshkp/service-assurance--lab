@@ -1,1 +1,4 @@
 docker run -tid --net=host --pid=host -v _config:/opt/collectd/etc/collectd.conf.d  -v /var/run:/var/run -v /tmp:/tmp  --privileged nfvpe/barometer-collectd:latest
+
+
+docker run -tid --net=host --pid=host -v /root/collectd_config_demo:/opt/collectd/etc/collectd.conf.d  -v /var/run:/var/run -v /tmp:/tmp  --privileged abays/barometer-collectd:latest
