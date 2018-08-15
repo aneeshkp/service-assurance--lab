@@ -34,7 +34,7 @@ groups:
        summary: "{{ $value }} zombie process(es) found"
        description: "{{ $value }} zombie process(es) for more than 30 secs."
    - alert: System Rebooted
-     expr: collectd_uptime{job="collectd"}<{{ system_rebooted_interval }}
+     expr: collectd_uptime{job="collectd"}< 60
 #    for: {{ system_rebooted_for_time }}
      labels:
        severity: critical
