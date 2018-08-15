@@ -97,18 +97,32 @@ groups:
        summary: "{{$labels.source}} running in {{ $labels.instance}}  is slow "
        description: "{{$labels.source}}  running in {{ $labels.instance }}  having high latency "
 
- - name: telemetry_listener_down
+ - name: telemetry_metric_listener_down
    interval: 1s
    rules:
    # Alert for any instance that is unreachable for >5 minutes.
-   - alert: telemetry_listerner_down
+   - alert: telemetry_metric_listerner_down
      #expr: absent(sa_collectd_uptime)
-     expr: absent(sa_collectd_last_pull_timestamp_seconds)
+     expr: absent(sa_collectd_last_pull_timestamp_seconds{source="Metric Listener"})
      for: 20s
      labels:
        severity: critical
      annotations:
-       summary: "Either metirc or event listener running in {{ $labels.instance}} is dead"
-       description: "Either metirc or event listener running in {{ $labels.instance }} is dead"
+       summary: "Metirc listener running in {{ $labels.instance}} is dead"
+       description: "Metirc listener running in {{ $labels.instance }} is dead"
+       
+ - name: telemetry_event_listener_down
+   interval: 1s
+   rules:
+   # Alert for any instance that is unreachable for >5 minutes.
+   - alert: telemetry_event_listerner_down
+     #expr: absent(sa_collectd_uptime)
+     expr: absent(sa_collectd_last_pull_timestamp_seconds{source="Event Listener"})
+     for: 20s
+     labels:
+       severity: critical
+     annotations:
+       summary: "Event listener running in {{ $labels.instance}} is dead"
+       description: "Event listener running in {{ $labels.instance }} is dead"
     
 
