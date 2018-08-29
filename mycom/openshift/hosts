@@ -1,0 +1,42 @@
+[OSEv3:children]
+masters
+nodes
+etcd
+#
+# # Set variables common for all OSEv3 hosts
+[OSEv3:vars]
+# SSH user, this user should allow ssh based auth without requiring a password
+ansible_ssh_user=openshift
+#
+# # If ansible_ssh_user is not root, ansible_become must be set to true
+ansible_become=true
+#
+openshift_deployment_type=openshift-enterprise
+#oreg_url=example.com/openshift3/ose-${component}:${version}
+#oreg_url=docker-registry.engineering.redhat.com:443/openshift3/ose-${component}:${version}
+#openshift_examples_modify_imagestreams=true
+openshift_disable_check=docker_image_availability
+#
+ # uncomment the following to enable htpasswd authentication; defaults to DenyAllPasswordIdentityProvider
+ #openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider'}]
+#
+# # host group for masters
+[masters]
+master-0.openshift.mycomlab.com
+#
+ # host group for etcd
+[etcd]
+master-0.openshift.mycomlab.com
+#
+# # host group for nodes, includes region info
+[nodes]
+master-0.openshift.mycomlab.com  
+infranode-0.openshift.mycomlab.com openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
+appnode-0.openshift.mycomlab.com openshift_node_labels="{'region': 'primary', 'zone': 'east'}"
+appnode-1.openshift.mycomlab.com openshift_node_labels="{'region': 'primary', 'zone': 'west'}"
+
+#master-0.openshift.mycomlab.com openshift_node_group_name='node-config-master'
+#appnode-0.openshift.mycomlab.com openshift_node_group_name='node-config-compute'
+#appnode-1.openshift.mycomlab.com openshift_node_group_name='node-config-compute'
+#infranode-0.openshift.mycomlab.com  openshift_node_group_name='node-config-infra'
+
