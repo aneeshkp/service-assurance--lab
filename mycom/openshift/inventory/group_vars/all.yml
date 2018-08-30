@@ -2,22 +2,22 @@
 openshift_openstack_clusterid: "openshift"
 openshift_openstack_public_dns_domain: "mycomlab.com"
 #openshift_openstack_dns_nameservers: ["10.11.5.19"]
-openshift_openstack_dns_nameservers: ["10.19.111.170"]
+openshift_openstack_dns_nameservers: ["10.19.111.158"]
 
 openshift_openstack_public_hostname_suffix: "-public"
 
 
 openshift_openstack_external_nsupdate_keys:
   private:
-    key_secret: "pDzT9Pf+YpFwJDOAsKK89Wi+FXFSvuHvGGswxpUYH6Y="
+    key_secret: "BTm/zfJ/XrLJLiLbgVQBy2sDxCKQr3ZAAD2KrEA+Y5Y="
     key_algorithm: "HMAC-SHA256"
     key_name: "public-openshift.mycomlab.com"
-    server: "10.19.111.170"
+    server: "10.19.111.158"
   public:
-    key_secret: "pDzT9Pf+YpFwJDOAsKK89Wi+FXFSvuHvGGswxpUYH6Y="
+    key_secret: "BTm/zfJ/XrLJLiLbgVQBy2sDxCKQr3ZAAD2KrEA+Y5Y="
     key_algorithm: "HMAC-SHA256"
     key_name: "public-openshift.mycomlab.com"
-    server: "10.19.111.170"
+    server: "10.19.111.158"
 
 # # Used Hostnames
 # # - set custom hostnames for roles by uncommenting corresponding lines
