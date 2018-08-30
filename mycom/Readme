@@ -1,0 +1,8 @@
+k: [10.19.111.158 -> 10.19.111.158] => {
+    "nsupdate_keys": {
+        "public-openshift.mycomlab.com": {
+            "key_algorithm": "HMAC-SHA256", 
+            "key_secret": "BTm/zfJ/XrLJLiLbgVQBy2sDxCKQr3ZAAD2KrEA+Y5Y="
+        }
+    }
+}
