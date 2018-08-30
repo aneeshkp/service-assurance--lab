@@ -14,3 +14,11 @@ ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbo
 ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbooks/openstack/inventory.py -i inventory red-hat-ca.yml
 
 ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbooks/openstack/inventory.py -i inventory repos.yml 
+ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbooks/openstack/inventory.py -i inventory /usr/share/ansible/openshift-ansible/playbooks/openstack/openshift-cluster/install.yml 
+
+
+
+
+
+------------
+ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbooks/openstack/inventory.py -i inventory /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
