@@ -22,3 +22,14 @@ ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbo
 
 ------------
 ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbooks/openstack/inventory.py -i inventory /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
+
+
+
+flavors users
+openshift_openstack_master_flavor: "ocpmaster"
+openshift_openstack_infra_flavor: "ocpinfranode"
+#openshift_openstack_cns_flavor: "m1.medium"
+openshift_openstack_node_flavor: "ocpappnode"
+#openshift_openstack_lb_flavor: "m1.medium"
+openshift_openstack_etcd_flavor: "medium.1"
+openshift_openstack_default_flavor: "ocpappnode"
