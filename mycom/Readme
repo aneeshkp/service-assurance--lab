@@ -1,3 +1,17 @@
+.5
+ssh root@172.16.0.103
+ overcloud-compute-0   192.0.2.107 
+overcloud-compute-1    92.0.2.110 
+overcloud-controller-0 192.0.2.112 
+#for bastion server
+ssh -i ocpkp cloud-user@10.19.111.167
+
+#for openshift
+source openshiftrc
+ ssh -i ocpkp openshift@10.19.111.171
+
+
+
 k: [10.19.111.158 -> 10.19.111.158] => {
     "nsupdate_keys": {
         "public-openshift.mycomlab.com": {
@@ -16,7 +30,8 @@ ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbo
 ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbooks/openstack/inventory.py -i inventory repos.yml 
 ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbooks/openstack/inventory.py -i inventory /usr/share/ansible/openshift-ansible/playbooks/openstack/openshift-cluster/install.yml 
 
-
+#Unsitall
+ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbooks/openstack/inventory.py -i inventory /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
 
 
 
