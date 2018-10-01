@@ -30,12 +30,14 @@ ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbo
 ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbooks/openstack/inventory.py -i inventory repos.yml 
 ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbooks/openstack/inventory.py -i inventory /usr/share/ansible/openshift-ansible/playbooks/openstack/openshift-cluster/install.yml 
 
-#Unsitall
+#Uninstall
 ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbooks/openstack/inventory.py -i inventory /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
 
 
 
 ------------
+eval ssh-agent $SHELL
+ssh-add ockp
 ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbooks/openstack/inventory.py -i inventory /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
 
 
