@@ -1,4 +1,4 @@
-.5
+ssh root@10.19.110.5
 ssh root@172.16.0.103
  overcloud-compute-0   192.0.2.107 
 overcloud-compute-1    92.0.2.110 
@@ -7,7 +7,10 @@ overcloud-controller-0 192.0.2.112
 ssh -i ocpkp cloud-user@10.19.111.167
 
 #for openshift
+eval ssh-agent $SHELL
+ssh-add ockp
 source openshiftrc
+
  ssh -i ocpkp openshift@10.19.111.171
 
 
