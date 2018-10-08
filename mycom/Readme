@@ -24,6 +24,16 @@ k: [10.19.111.158 -> 10.19.111.158] => {
     }
 }
 
+ok: [10.19.111.169 -> 10.19.111.169] => {
+    "nsupdate_keys": {
+        "public-openshift.nfvpemycomlab.com": {
+            "key_algorithm": "HMAC-SHA256", 
+            "key_secret": "U2xxm2IcKK6EPS5/eds1GoWFKW6SbaR+PA2S3YOBGy0="
+        }
+    }
+}
+
+
 ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbooks/openstack/inventory.py -i inventory /usr/share/ansible/openshift-ansible/playbooks/openstack/openshift-cluster/prerequisites.yml 
 
 ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbooks/openstack/inventory.py -i inventory /usr/share/ansible/openshift-ansible/playbooks/openstack/openshift-cluster/provision.yml 
