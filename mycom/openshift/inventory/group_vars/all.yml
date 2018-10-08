@@ -1,33 +1,31 @@
 ---
 openshift_openstack_clusterid: "openshift"
-openshift_openstack_public_dns_domain: "mycomlab.com"
-#openshift_openstack_dns_nameservers: ["10.11.5.19"]
-openshift_openstack_dns_nameservers: ["10.19.111.158"]
+openshift_openstack_public_dns_domain: "nfvpemycomlab.com"
+openshift_openstack_dns_nameservers: ["10.19.111.169"]
 
 openshift_openstack_public_hostname_suffix: "-public"
 
-
 openshift_openstack_external_nsupdate_keys:
   private:
-    key_secret: "BTm/zfJ/XrLJLiLbgVQBy2sDxCKQr3ZAAD2KrEA+Y5Y="
+    key_secret: "U2xxm2IcKK6EPS5/eds1GoWFKW6SbaR+PA2S3YOBGy0="
     key_algorithm: "HMAC-SHA256"
-    key_name: "public-openshift.mycomlab.com"
-    server: "10.19.111.158"
+    key_name: "public-openshift.nfvpemycomlab.com"
+    server: "10.19.111.169"
   public:
-    key_secret: "BTm/zfJ/XrLJLiLbgVQBy2sDxCKQr3ZAAD2KrEA+Y5Y="
+    key_secret: "U2xxm2IcKK6EPS5/eds1GoWFKW6SbaR+PA2S3YOBGy0="
     key_algorithm: "HMAC-SHA256"
-    key_name: "public-openshift.mycomlab.com"
-    server: "10.19.111.158"
-
+    key_name: "public-openshift.nfvpemycomlab.com"
+    server: "10.19.111.169"
 # # Used Hostnames
 # # - set custom hostnames for roles by uncommenting corresponding lines
+#openshift_schedulable: true
 openshift_openstack_master_hostname: "master"
-openshift_openstack_infra_hostname: "infranode"
+#openshift_openstack_infra_hostname: "infranode"
 #openshift_openstack_cns_hostname: "cns"
 openshift_openstack_node_hostname: "appnode"
 #openshift_openstack_lb_hostname: "lb"
-openshift_openstack_etcd_hostname: "etcd"
-
+#openshift_openstack_etcd_hostname: "etcd"
+#openshift_web_console_nodeselector: {'region':'infra'}
 openshift_openstack_keypair_name: "ocpkp"
 openshift_openstack_external_network_name: "public_network"
 openshift_openstack_private_network_name:  "private_network" 
@@ -133,7 +131,7 @@ openshift_openstack_num_nodes: 2
 openshift_openstack_master_flavor: "ocpmaster"
 openshift_openstack_infra_flavor: "ocpinfranode"
 #openshift_openstack_cns_flavor: "m1.medium"
-openshift_openstack_node_flavor: "ocpappnode"
+openshift_openstack_node_flavor: "ocpappnode.large"
 #openshift_openstack_lb_flavor: "m1.medium"
 openshift_openstack_etcd_flavor: "medium.1"
 openshift_openstack_default_flavor: "ocpappnode"
@@ -158,6 +156,7 @@ openshift_openstack_use_vm_load_balancer: false
 #openshift_openstack_docker_etcd_volume_size: "2"
 #openshift_openstack_docker_lb_volume_size: "5"
 openshift_openstack_docker_volume_size: "15"
+openshift_hosted_registry_storage_openstack_filesystem: "nfstype"
 
 ## Specify server group policies for master and infra nodes. Nova must be configured to
 ## enable these policies. 'anti-affinity' will ensure that each VM is launched on a
@@ -167,11 +166,11 @@ openshift_openstack_docker_volume_size: "15"
 
 
 # The Classless Inter-Domain Routing (CIDR) for the OpenStack VM subnet.
-openshift_openstack_subnet_cidr: "172.69.1.0/24"
+openshift_openstack_subnet_cidr: "172.69.3.0/24"
 # The starting IP address for the OpenStack subnet allocation pool.
-openshift_openstack_pool_start: "172.69.1.2"
+openshift_openstack_pool_start: "172.69.3.2"
 # The ending IP address for the OpenStack subnet allocation pool.
-openshift_openstack_pool_end: "172.69.1.254"
+openshift_openstack_pool_end: "172.69.3.254"
 
 ## Red Hat subscription:
 #rhsub_user: '<username>'
