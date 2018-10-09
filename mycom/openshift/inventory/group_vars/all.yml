@@ -166,11 +166,11 @@ openshift_hosted_registry_storage_openstack_filesystem: "nfstype"
 
 
 # The Classless Inter-Domain Routing (CIDR) for the OpenStack VM subnet.
-openshift_openstack_subnet_cidr: "172.69.3.0/24"
+openshift_openstack_subnet_cidr: "172.69.2.0/24"
 # The starting IP address for the OpenStack subnet allocation pool.
-openshift_openstack_pool_start: "172.69.3.2"
+openshift_openstack_pool_start: "172.69.2.2"
 # The ending IP address for the OpenStack subnet allocation pool.
-openshift_openstack_pool_end: "172.69.3.254"
+openshift_openstack_pool_end: "172.69.2.254"
 
 ## Red Hat subscription:
 #rhsub_user: '<username>'
