@@ -27,7 +27,7 @@ openshift_schedulable: true
 openshift_additional_repos: [{'id': 'ose-devel', 'name': 'ose-devel', 'baseurl': 'http://download-node-02.eng.bos.redhat.com/rcm-guest/puddles/RHAOS/AtomicOpenShift/3.9/latest/x86_64/os/', 'enabled': 1, 'gpgcheck': 0}]
 #openshift_docker_additional_registries: docker-registry.engineering.redhat.com:443
 oreg_url: registry.access.redhat.com/openshift3/ose-${component}:${version}
-#'registry.reg-aws.openshift.com:443/openshift3/ose-${component}:${version}'
+#registry.reg-aws.openshift.com:443/openshift3/ose-${component}:${version}'
 openshift_examples_modify_imagestreams: true
 #oreg_auth_user: '<username from https://console.reg-aws.openshift.com/console/command-line>'
 #oreg_auth_password: '<token from https://console.reg-aws.openshift.com/console/command-line>'
@@ -99,12 +99,13 @@ openshift_cloudprovider_openstack_tenant_name: "{{ lookup('env','OS_PROJECT_NAME
 #openshift_cloudprovider_openstack_region: "RegionOne"
 openshift_cloudprovider_openstack_domain_name: "{{ lookup('env','OS_USER_DOMAIN_NAME') }}"
 openshift_cloudprovider_openstack_blockstorage_version: v2
-
+containerized: true 
 
 ## Use Cinder volume for Openshift registry:
 openshift_hosted_registry_storage_kind: openstack
 openshift_hosted_registry_storage_access_modes: ['ReadWriteOnce']
-openshift_hosted_registry_storage_openstack_filesystem: nfstype
+openshift_hosted_registry_storage_openstack_filesystem: xfs 
+#nfstype
 
 ## NOTE(shadower): This won't work until the openshift-ansible issue #5657 is fixed:
 ## https://github.com/openshift/openshift-ansible/issues/5657
@@ -139,4 +140,4 @@ ansible_become: true
 openshift_use_openshift_sdn: true
 openshift_use_flannel: false
 #flannel_interface: eth1
-openshift_node_proxy_mode: "iptables
+openshift_node_proxy_mode: "iptables"
