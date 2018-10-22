@@ -12,16 +12,23 @@
 #OSEv3:vars]
 #ansible_ssh_user=openshift
 #nsible_become=yes
-#ebug_level=4
+debug_level: 4
 ## Openshift product versions and repos to install from
 #openshift_deployment_type: origin
 #openshift_repos_enable_testing: true
 openshift_deployment_type: openshift-enterprise
 openshift_release: v3.9
-
+openshift_image_tag: v3.9.41
+openshift_pkg_version: -3.9.41
+#openshift_web_console_nodeselector: {'region': 'infra'}
+#openshift_router_selector: {'region': 'infra'}
+#openshift_registry_selector: {'region': 'infra'}
+openshift_schedulable: true
 openshift_additional_repos: [{'id': 'ose-devel', 'name': 'ose-devel', 'baseurl': 'http://download-node-02.eng.bos.redhat.com/rcm-guest/puddles/RHAOS/AtomicOpenShift/3.9/latest/x86_64/os/', 'enabled': 1, 'gpgcheck': 0}]
 #openshift_docker_additional_registries: docker-registry.engineering.redhat.com:443
-#oreg_url: 'registry.reg-aws.openshift.com:443/openshift3/ose-${component}:${version}'
+oreg_url: registry.access.redhat.com/openshift3/ose-${component}:${version}
+#registry.reg-aws.openshift.com:443/openshift3/ose-${component}:${version}'
+openshift_examples_modify_imagestreams: true
 #oreg_auth_user: '<username from https://console.reg-aws.openshift.com/console/command-line>'
 #oreg_auth_password: '<token from https://console.reg-aws.openshift.com/console/command-line>'
 #openshift_disable_check: "docker_image_availability"
@@ -65,23 +72,23 @@ openshift_master_cluster_public_hostname: "console.{{ (openshift_openstack_clust
 #      - 'pod_vif=nested-vlan'
 #    edits: []
 
-openshift_master_identity_providers:
-  - name: ldap_auth
-    kind: LDAPPasswordIdentityProvider
-    challenge: true
-    login: true
-    bindDN: ""
-    bindPassword: ""
-    url: "ldap://ldap.corp.redhat.com/ou=users,dc=redhat,dc=com?uid"
-    attributes:
-      id: ['dn']
-      email: ['mail']
-      name: ['cn']
-      preferredUsername: ['uid']
-    ca: '/etc/origin/master/RH-IT-Root-CA.crt'
-    insecure: false
-openshift_master_ldap_ca_file: "{{ lookup('env','HOME') }}/RH-IT-Root-CA.crt"
-#openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
+#openshift_master_identity_providers:
+#  - name: ldap_auth
+#    kind: LDAPPasswordIdentityProvider
+#    challenge: true
+#    login: true
+#    bindDN: ""
+#    bindPassword: ""
+#    url: "ldap://ldap.corp.redhat.com/ou=users,dc=redhat,dc=com?uid"
+#    attributes:
+#      id: ['dn']
+#      email: ['mail']
+#      name: ['cn']
+#      preferredUsername: ['uid']
+#    ca: '/etc/origin/master/RH-IT-Root-CA.crt'
+#    insecure: false
+#openshift_master_ldap_ca_file: "{{ lookup('env','HOME') }}/RH-IT-Root-CA.crt"
+openshift_master_identity_providers: [{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
 
 ## Openstack credentials
 openshift_cloudprovider_kind: openstack
@@ -92,12 +99,13 @@ openshift_cloudprovider_openstack_tenant_name: "{{ lookup('env','OS_PROJECT_NAME
 #openshift_cloudprovider_openstack_region: "RegionOne"
 openshift_cloudprovider_openstack_domain_name: "{{ lookup('env','OS_USER_DOMAIN_NAME') }}"
 openshift_cloudprovider_openstack_blockstorage_version: v2
-
+containerized: true 
 
 ## Use Cinder volume for Openshift registry:
 openshift_hosted_registry_storage_kind: openstack
 openshift_hosted_registry_storage_access_modes: ['ReadWriteOnce']
-openshift_hosted_registry_storage_openstack_filesystem: xfs
+openshift_hosted_registry_storage_openstack_filesystem: xfs 
+#nfstype
 
 ## NOTE(shadower): This won't work until the openshift-ansible issue #5657 is fixed:
 ## https://github.com/openshift/openshift-ansible/issues/5657
