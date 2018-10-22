@@ -1,0 +1,65 @@
+ssh root@10.19.110.5
+ssh root@172.16.0.103
+ overcloud-compute-0   192.0.2.107 
+overcloud-compute-1    92.0.2.110 
+overcloud-controller-0 192.0.2.112 
+#for bastion server
+ssh -i ocpkp cloud-user@10.19.111.167
+
+#for openshift
+eval ssh-agent $SHELL
+ssh-add ockp
+source openshiftrc
+
+ ssh -i ocpkp openshift@10.19.111.171
+
+
+
+k: [10.19.111.158 -> 10.19.111.158] => {
+    "nsupdate_keys": {
+        "public-openshift.mycomlab.com": {
+            "key_algorithm": "HMAC-SHA256", 
+            "key_secret": "BTm/zfJ/XrLJLiLbgVQBy2sDxCKQr3ZAAD2KrEA+Y5Y="
+        }
+    }
+}
+
+ok: [10.19.111.169 -> 10.19.111.169] => {
+    "nsupdate_keys": {
+        "public-openshift.nfvpemycomlab.com": {
+            "key_algorithm": "HMAC-SHA256", 
+            "key_secret": "U2xxm2IcKK6EPS5/eds1GoWFKW6SbaR+PA2S3YOBGy0="
+        }
+    }
+}
+
+
+ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbooks/openstack/inventory.py -i inventory /usr/share/ansible/openshift-ansible/playbooks/openstack/openshift-cluster/prerequisites.yml 
+
+ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbooks/openstack/inventory.py -i inventory /usr/share/ansible/openshift-ansible/playbooks/openstack/openshift-cluster/provision.yml 
+
+ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbooks/openstack/inventory.py -i inventory red-hat-ca.yml
+
+ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbooks/openstack/inventory.py -i inventory repos.yml 
+ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbooks/openstack/inventory.py -i inventory /usr/share/ansible/openshift-ansible/playbooks/openstack/openshift-cluster/install.yml 
+
+#Uninstall
+ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbooks/openstack/inventory.py -i inventory /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
+
+
+
+------------
+eval ssh-agent $SHELL
+ssh-add ockp
+ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbooks/openstack/inventory.py -i inventory /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
+
+
+
+flavors users
+openshift_openstack_master_flavor: "ocpmaster"
+openshift_openstack_infra_flavor: "ocpinfranode"
+#openshift_openstack_cns_flavor: "m1.medium"
+openshift_openstack_node_flavor: "ocpappnode"
+#openshift_openstack_lb_flavor: "m1.medium"
+openshift_openstack_etcd_flavor: "medium.1"
+openshift_openstack_default_flavor: "ocpappnode"

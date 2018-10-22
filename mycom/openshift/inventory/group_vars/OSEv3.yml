@@ -141,4 +141,3 @@ openshift_use_openshift_sdn: true
 openshift_use_flannel: false
 #flannel_interface: eth1
 openshift_node_proxy_mode: "iptables"
-
