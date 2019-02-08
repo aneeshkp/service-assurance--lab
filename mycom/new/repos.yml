@@ -1,0 +1,48 @@
+---
+- name: Enable RHEL testing repos on all hosts
+  hosts: OSEv3
+  become: yes
+  vars_prompt:
+
+     - name: "sub_username"
+       prompt: "Enter Subscription Username"
+       private: yes
+ 
+     - name: "sub_password"
+       prompt: "Enter subscription password"
+       private: yes
+
+
+  
+  tasks:
+  # - name: Register with activationkey and consume subscriptions matching Red Hat Enterprise Server or Red Hat Virtualization
+  #  redhat_subscription:
+  #    state: present
+  #    activationkey: "key-name"
+  #    org_id: 1111111
+  #    pool: '^(Red Hat Cloud Suite|Red Hat OpenShift Container Platform)$'
+  #
+
+  - name: Same as above but subscribe to a specific pool by ID.
+    redhat_subscription:
+      state: present
+      username: "{{sub_username}}"
+      password: "{{sub_password}}" 
+      pool_ids: 8a85f98260c27fc50160c323263339ff
+
+      #8a85f98260c27fc50160c323247e39e0 
+  - name: Disable all current yum repos
+    rhsm_repository:
+      name: '*'
+      state: disabled
+
+  - name: Enable Repositories
+    rhsm_repository:
+      name: "{{ item }}"
+      state: enabled
+    with_items:
+      - rhel-7-server-rpms
+      - rhel-7-server-extras-rpms
+      - rhel-7-server-ansible-2.6-rpms
+      - rhel-7-server-ose-3.11-rpms
+      - rhel-7-fast-datapath-rpms

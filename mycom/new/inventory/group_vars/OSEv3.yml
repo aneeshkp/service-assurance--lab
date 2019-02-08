@@ -1,0 +1,145 @@
+---
+#openshift-lb ansible_host=openshift-lb.nfvpe.site
+#openshift-master-1 ansible_host: master1.mycomlab.com
+#openshift-node-1 ansible_host: appnode2.mycomlab.com
+#openshift-node-2 ansible_host: appnode2.mycomlab.com
+#openshift-infra-node-1 ansible_host: infranode1.mycomlab.com
+
+#[OSEv3\:children]
+#masters
+#odes
+
+#OSEv3:vars]
+#ansible_ssh_user=openshift
+#nsible_become=yes
+debug_level: 4
+## Openshift product versions and repos to install from
+#openshift_deployment_type: origin
+#openshift_repos_enable_testing: true
+openshift_deployment_type: openshift-enterprise
+openshift_release: v3.11
+openshift_image_tag: v3.11
+openshift_pkg_version: -3.11
+#openshift_logging_image_version: v3.11.69
+#openshift_web_console_nodeselector: {'region': 'infra'}
+#openshift_router_selector: {'region': 'infra'}
+#openshift_registry_selector: {'region': 'infra'}
+openshift_schedulable: true
+openshift_additional_repos: [{'id': 'ose-devel', 'name': 'ose-devel', 'baseurl': 'http://download-node-02.eng.bos.redhat.com/rcm-guest/puddles/RHAOS/AtomicOpenShift/3.11/latest/x86_64/os/', 'enabled': 1, 'gpgcheck': 0}]
+#openshift_docker_additional_registries: docker-registry.engineering.redhat.com:443
+oreg_url: registry.access.redhat.com/openshift3/ose-${component}:${version}
+#registry.reg-aws.openshift.com:443/openshift3/ose-${component}:${version}'
+openshift_examples_modify_imagestreams: true
+#oreg_auth_user: '<username from https://console.reg-aws.openshift.com/console/command-line>'
+#oreg_auth_password: '<token from https://console.reg-aws.openshift.com/console/command-line>'
+#openshift_disable_check: "docker_image_availability"
+# Default domain to access the applications running on OpenShift.
+# This uses the `openshift_openstack_clusterid`
+# and `openshift_openstack_public_dns_domain` values from all.yml.
+# It will be set to `apps.openshift.example.com` by default.
+# Feel free to change this to a value you prefer. It should be under the
+# domain the OpenShift cluster is configured, though.
+openshift_master_default_subdomain: "apps.{{ (openshift_openstack_clusterid|trim == '') | ternary(openshift_openstack_public_dns_domain, openshift_openstack_clusterid + '.' + openshift_openstack_public_dns_domain) }}"
+
+# Domain to access the OpenShift UI and API.
+# This uses the `openshift_openstack_clusterid`
+# and `openshift_openstack_public_dns_domain` values from all.yml.
+# It will be set to `console.openshift.example.com` by default.
+# Feel free to change this to a value you prefer. It should be under the
+# domain the OpenShift cluster is configured, though.
+openshift_master_cluster_public_hostname: "console.{{ (openshift_openstack_clusterid|trim == '') | ternary(openshift_openstack_public_dns_domain, openshift_openstack_clusterid + '.' + openshift_openstack_public_dns_domain) }}"
+
+
+# NOTE(shadower): commenting this out for now -- we'll observe this post-deployment
+#openshift_hosted_router_wait: True
+#openshift_hosted_registry_wait: True
+
+## Kuryr label configuration
+#kuryr_openstack_pool_driver: multi
+#
+#openshift_node_groups:
+#  - name: node-config-master
+#    labels:
+#      - 'node-role.kubernetes.io/master=true'
+#    edits: []
+#  - name: node-config-infra
+#    labels:
+#      - 'node-role.kubernetes.io/infra=true'
+#      - 'pod_vif=nested-vlan'
+#    edits: []
+#  - name: node-config-compute
+#    labels:
+#      - 'node-role.kubernetes.io/compute=true'
+#      - 'pod_vif=nested-vlan'
+#    edits: []
+
+#openshift_master_identity_providers:
+#  - name: ldap_auth
+#    kind: LDAPPasswordIdentityProvider
+#    challenge: true
+#    login: true
+#    bindDN: ""
+#    bindPassword: ""
+#    url: "ldap://ldap.corp.redhat.com/ou=users,dc=redhat,dc=com?uid"
+#    attributes:
+#      id: ['dn']
+#      email: ['mail']
+#      name: ['cn']
+#      preferredUsername: ['uid']
+#    ca: '/etc/origin/master/RH-IT-Root-CA.crt'
+#    insecure: false
+#openshift_master_ldap_ca_file: "{{ lookup('env','HOME') }}/RH-IT-Root-CA.crt"
+openshift_master_identity_providers: [{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
+
+## Openstack credentials
+openshift_cloudprovider_kind: openstack
+openshift_cloudprovider_openstack_auth_url: "{{ lookup('env','OS_AUTH_URL') }}"
+openshift_cloudprovider_openstack_username: "{{ lookup('env','OS_USERNAME') }}"
+openshift_cloudprovider_openstack_password: "{{ lookup('env','OS_PASSWORD') }}"
+openshift_cloudprovider_openstack_tenant_name: "{{ lookup('env','OS_PROJECT_NAME') }}"
+#openshift_cloudprovider_openstack_region: "RegionOne"
+openshift_cloudprovider_openstack_domain_name: "{{ lookup('env','OS_USER_DOMAIN_NAME') }}"
+openshift_cloudprovider_openstack_blockstorage_version: v2
+containerized: true 
+
+## Use Cinder volume for Openshift registry:
+openshift_hosted_registry_storage_kind: openstack
+openshift_hosted_registry_storage_access_modes: ['ReadWriteOnce']
+openshift_hosted_registry_storage_openstack_filesystem: xfs 
+#nfstype
+
+## NOTE(shadower): This won't work until the openshift-ansible issue #5657 is fixed:
+## https://github.com/openshift/openshift-ansible/issues/5657
+## If you're using the `openshift_openstack_cinder_hosted_registry_name` option from
+## `all.yml`, uncomment these lines:
+#openshift_hosted_registry_storage_openstack_volumeID: "{{ lookup('os_cinder', openshift_openstack_cinder_hosted_registry_name).id }}"
+#openshift_hosted_registry_storage_volume_size: "{{ openshift_openstack_cinder_hosted_registry_size_gb }}Gi"
+
+## If you're using a Cinder volume you've set up yourself, uncomment these lines:
+openshift_hosted_registry_storage_openstack_volumeID: fd14436d-ced7-4762-bd40-a8093ffd6694 
+openshift_hosted_registry_storage_volume_size: 40Gi
+
+
+# NOTE(shadower): the hostname check seems to always fail because the
+# host's floating IP address doesn't match the address received from
+# inside the host.
+openshift_hostname_check: false
+
+# For POCs or demo environments that are using smaller instances than
+# the official recommended values for RAM and DISK, uncomment the line below.
+openshift_disable_check: disk_availability,memory_availability,docker_storage,package_availability,package_version
+
+openshift_enable_service_catalog: false
+template_service_broker_install: false
+
+# NOTE(shadower): Always switch to root on the OSEv3 nodes.
+# openshift-ansible requires an explicit `become`.
+ansible_become: true
+#openshift_rolling_restart_mode: system
+# # Flannel networking
+#osm_cluster_network_cidr: 10.128.0.0/14
+openshift_use_openshift_sdn: true
+openshift_use_flannel: false
+#flannel_interface: eth1
+openshift_node_proxy_mode: "iptables"
+
