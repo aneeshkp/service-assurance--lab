@@ -12,7 +12,9 @@ ssh-add ockp
 source openshiftrc
 
  ssh -i ocpkp openshift@10.19.111.171
-
+wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+# rpm -ivh epel-release-latest-7.noarch.rpm
+for shade
 
 
 k: [10.19.111.158 -> 10.19.111.158] => {
