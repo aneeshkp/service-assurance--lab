@@ -32,9 +32,9 @@ openshift_additional_repos: [{'id': 'ose-devel', 'name': 'ose-devel', 'baseurl':
 #openshift_docker_additional_registries: registry.reg-aws.openshift.com:443
 #oreg_url: 'registry.redhat.io'
 openshift_docker_additional_registries: registry.reg-aws.openshift.com:443
-oreg_url: 'registry.reg-aws.openshift.com:443/openshift3/ose-${component}:${version}'
-oreg_auth_user: 'aputtur@redhat.com'
-oreg_auth_password: 'Jd8xGbprbb-V0H8jN2ZnP_tUj5UbaZ2J_Dk0X8e8dP8'
+oreg_url: ''
+oreg_auth_user: ''
+oreg_auth_password: ''
 #openshift_docker_additional_registries: docker-registry.engineering.redhat.com:443
 #oreg_url: registry.access.redhat.com/openshift3/ose-${component}:${version}
 #registry.reg-aws.openshift.com:443/openshift3/ose-${component}:${version}'
