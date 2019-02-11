@@ -12,7 +12,9 @@ ssh-add ockp
 source openshiftrc
 
  ssh -i ocpkp openshift@10.19.111.171
-
+wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+# rpm -ivh epel-release-latest-7.noarch.rpm
+for shade
 
 
 k: [10.19.111.158 -> 10.19.111.158] => {
@@ -32,6 +34,18 @@ ok: [10.19.111.169 -> 10.19.111.169] => {
         }
     }
 }
+
+
+ok: [10.19.111.153 -> 10.19.111.153] => {
+    "nsupdate_keys": {
+        "public-openshift.nfvpemycomlab.com": {
+            "key_algorithm": "HMAC-SHA256", 
+            "key_secret": "x6aneAYp7QWROfHOEuR0qcZLq6W3AuRNx3uYBFvSsMA="
+        }
+    }
+}
+
+
 
 
 ansible-playbook --user openshift -i /usr/share/ansible/openshift-ansible/playbooks/openstack/inventory.py -i inventory /usr/share/ansible/openshift-ansible/playbooks/openstack/openshift-cluster/prerequisites.yml 
