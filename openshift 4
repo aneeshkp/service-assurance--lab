@@ -1,0 +1,5 @@
+cd $GOPATH/src/github.com/openshift/installer/bin/
+cp openshift-install /usr/local/bin/
+openshift-install --dir=initial create install-config
+ openshift-install destroy cluster --dir=cluster-0 --log-level=debug
+  openshift-install --dir=cluster-0 create cluster --log-level=debug
