@@ -1,0 +1,8 @@
+kubeadm init --cri-socket="/var/run/dockershim.sock" --pod-network-cidr=192.168.174.0/24 --service-cidr=192.168.175.0/24
+kubectl -n kube-system apply -f https://raw.githubusercontent.com/coreos/flannel/bc79dd1505b0c8681ece4de4c0d86c5cd2643275/Documentation/kube-flannel.yml
+
+
+
+nodes
+echo 1 > /proc/sys/net/ipv4/ip_forward
+kubeadm join 192.168.173.5:6443 --token q8cxif.3eeaa5sfwqlnjthk     --discovery-token-ca-cert-hash sha256:8a6b0b2782bbf1bb87a28c226c131676c3f10ea8edcf40867e6316eb281af82f
