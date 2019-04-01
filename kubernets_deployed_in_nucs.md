@@ -108,5 +108,8 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 [initial token expires in 24 hours, you can create, never expire token using this command:- kubeadm token create --ttl=0 --print-join-command]
 
 kubeadm join 192.168.173.5:6443 --token q8cxif.3eeaa5sfwqlnjthk     --discovery-token-ca-cert-hash sha256:8a6b0b2782bbf1bb87a28c226c131676c3f10ea8edcf40867e6316eb281af82f
+```
+Optional, to add label to worker node
+```
 kubectl label node  kube-node-1 node-role.kubernetes.io/worker=worker
 ```
