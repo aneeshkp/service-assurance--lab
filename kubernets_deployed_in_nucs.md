@@ -1,4 +1,4 @@
-###  Running Kubernetes on  nucs nodes (1 master and 2 worker) and using laptop as router ###
+###  Running Kubernetes on  nucs (1 master and 2 worker) and using laptop as router ###
 
 ```
 
