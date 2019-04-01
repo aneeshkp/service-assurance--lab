@@ -20,7 +20,7 @@ master 192.168.173.2
 node1 192.168.173.3
 node2 192.168.173.4
 Set gateway in ifcfg to laptop 192.168.173.10
-###### ---ifcfg-------------------------------------------- ######
+###### Network script example  ######
 ```
 TYPE=Ethernet
 PROXY_METHOD=none
@@ -45,8 +45,8 @@ GATEWAY=192.168.173.10
 On all nodes install kubelet and docker.
 ```
 
-###### Master Nucs######
-for flannel to work correctly, you must pass --pod-network-cidr=10.244.0.0/16 to kubeadm init.
+###### Master Nucs ######
+** for flannel to work correctly, you must pass --pod-network-cidr=10.244.0.0/16 to kubeadm init.**
 ```
 kubeadm init --cri-socket="/var/run/dockershim.sock" --pod-network-cidr=10.244.0.0/16
 ~~ kubeadm init --cri-socket="/var/run/crio/crio.sock"  --pod-network-cidr=10.244.0.0/16 ~~
