@@ -100,7 +100,7 @@ systemctl restart kubelet
 ```
 
 ### Join worker nodes , ###
-###### login to each node and run join commands, that was prsented to you after kubeadm init spawned as cluster. ######
+###### login to each node and run join commands. Join command is presented after master is created, or you can get one as shown below. ######
 [ preflight check , install kubelet and docker]
 ```
 echo 1 > /proc/sys/net/ipv4/ip_forward
