@@ -3,6 +3,13 @@ kubeadm init --cri-socket="/var/run/dockershim.sock" --pod-network-cidr=10.244.0
 
 kubectl -n kube-system apply -f https://raw.githubusercontent.com/coreos/flannel/bc79dd1505b0c8681ece4de4c0d86c5cd2643275/Documentation/kube-flannel.yml
 
+kubectl label node  kube-node-1 node-role.kubernetes.io/worker=worker
+
+
+[Service]
+CPUAccounting=true
+MemoryAccounting=true
+
 
 
 nodes
