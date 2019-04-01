@@ -1,4 +1,5 @@
-kubeadm init --cri-socket="/var/run/dockershim.sock" --pod-network-cidr=192.168.174.0/24 --service-cidr=192.168.175.0/24
+kubeadm init --cri-socket="/var/run/dockershim.sock" --pod-network-cidr=192.168.174.0/24 --service-cidr=192.168.175.0/24 --feature-gates=CoreDNS=true
+kubeadm init --cri-socket="--cri-socket="/var/run/crio/crio.sock"  --pod-network-cidr=192.168.174.0/24 --service-cidr=192.168.175.0/24 --feature-gates=CoreDNS=true
 kubectl -n kube-system apply -f https://raw.githubusercontent.com/coreos/flannel/bc79dd1505b0c8681ece4de4c0d86c5cd2643275/Documentation/kube-flannel.yml
 
 
