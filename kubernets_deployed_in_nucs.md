@@ -104,8 +104,17 @@ systemctl restart kubelet
 [ preflight check , install kubelet and docker]
 ```
 echo 1 > /proc/sys/net/ipv4/ip_forward
-[copy this from master nodes, if token is not found use this command to list token:- kubeadm token list ]
-[initial token expires in 24 hours, you can create, never expire token using this command:- kubeadm token create --ttl=0 --print-join-command]
+
+```
+###### copy this from master nodes, if token is not found use this command to list token:-   #####
+```
+kubeadm token list
+```
+###### Initial token expires in 24 hours, you can create, never expire token using this command ######
+```
+kubeadm token create --ttl=0 --print-join-command
+
+or copy the line from master
 
 kubeadm join 192.168.173.5:6443 --token q8cxif.3eeaa5sfwqlnjthk     --discovery-token-ca-cert-hash sha256:8a6b0b2782bbf1bb87a28c226c131676c3f10ea8edcf40867e6316eb281af82f
 ```
