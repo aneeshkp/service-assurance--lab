@@ -54,7 +54,7 @@ GATEWAY=192.168.173.10
 3. On all nodes install kubelet and docker.
 ```
 
-###### Installing Master in Nucs ######
+### Installing Master in Nucs ###
 1. ssh to master node and run kubeadm init as shown below.
 ** for flannel to work correctly, you must pass --pod-network-cidr=10.244.0.0/16 to kubeadm init.**
 ```
@@ -99,7 +99,7 @@ systemctl daemon-reload
 systemctl restart kubelet
 ```
 
-###### Join worked nodes , ######
+### Join worker nodes , ###
 ###### login to each node and run join commands, that was prsented to you after kubeadm init spawned as cluster. ######
 [ preflight check , install kubelet and docker]
 ```
